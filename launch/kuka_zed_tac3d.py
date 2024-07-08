@@ -6,9 +6,6 @@ from ament_index_python.packages import get_package_share_directory
 
 
 def generate_launch_description():
-    pkg_prefix = get_package_share_directory('Tac3D-v3.1.3-linux')
-    params_file = os.path.join(pkg_prefix, 'Tac3D-v3.1.3-linux')
-
     return LaunchDescription([
         # 机械臂lbr_bringup启动
         ExecuteProcess(
@@ -33,7 +30,7 @@ def generate_launch_description():
             cmd=[
                 './Tac3D', '-c', 'config/A1-0040R', '-d', '2', '-i', '127.0.0.1', '-p', '9988'
             ],
-            cwd=params_file,
+            cwd='/root/ros2_ws/ros2_driver_layer/src/Tac3D-v3.1.3-linux',
             shell=True,
             output='screen'
         ),
