@@ -17,19 +17,27 @@ def generate_launch_description():
     base_dir = '/root/ros2_ws/ros2_driver_layer/training_data/human_teaching'
     latest_path, latest_dir_name = get_latest_directory(base_dir)
 
-    recorder_vector_node = Node(
-        package='data_recorder',
-        executable='multi_topic_recorder_vector',
-        name='multi_topic_recorder_vector',
-        output='screen'
-    )
+    #recorder_vector_node = Node(
+    #    package='data_recorder',
+    #    executable='multi_topic_recorder_vector',
+    #    name='multi_topic_recorder_vector',
+    #    output='screen'
+    #)
 
-    recorder_image_node = Node(
+    #recorder_image_node = Node(
+    #    package='data_recorder',
+    #    executable='multi_topic_recorder_image',
+    #    name='multi_topic_recorder_image',
+    #    output='screen'
+    #)
+    
+    recorder_node = Node(
         package='data_recorder',
-        executable='multi_topic_recorder_image',
-        name='multi_topic_recorder_image',
+        executable='dataset_recorder',
+        name='dataset_recorder',
         output='screen'
     )
+    
 
     bag_play_process = ExecuteProcess(
         cmd=[
@@ -40,24 +48,23 @@ def generate_launch_description():
         shell=True
     )
 
-    stop_recorder_vector = ExecuteProcess(
-        cmd=['pkill', '-f', 'multi_topic_recorder_vector'],
+    stop_recorder = ExecuteProcess(
+        cmd=['pkill', '-f', 'recorder_node'],
         shell=True
     )
 
-    stop_recorder_image = ExecuteProcess(
-        cmd=['pkill', '-f', 'multi_topic_recorder_image'],
-        shell=True
-    )
+    #stop_recorder_image = ExecuteProcess(
+    #    cmd=['pkill', '-f', 'multi_topic_recorder_image'],
+    #    shell=True
+    #)
 
     return LaunchDescription([
-        recorder_vector_node,
-        recorder_image_node,
+        recorder_node,
         bag_play_process,
         RegisterEventHandler(
             OnProcessExit(
                 target_action=bag_play_process,
-                on_exit=[stop_recorder_vector, stop_recorder_image]
+                on_exit=[stop_recorder]
             )
         )
     ])
