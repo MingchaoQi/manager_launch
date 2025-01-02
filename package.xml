@@ -15,6 +15,7 @@
   <build_depend>rcutils</build_depend>
   <build_depend>rosidl_default_generators</build_depend>
   <build_depend>zed_components</build_depend>
+  <depend>bye140_msg</depend>
 
   <exec_depend>controller_manager</exec_depend>
   <exec_depend>gazebo_ros</exec_depend>
